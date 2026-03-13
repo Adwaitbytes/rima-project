@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveLeads - HSR Motors Lead Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon"><i class="fas fa-car-side"></i></div>
+            <div class="logo-text">
+                <span class="logo-name">DriveLeads</span>
+                <span class="logo-sub">HSR Motors</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-screen="dashboard">
+                <i class="fas fa-th-large"></i><span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-screen="listing">
+                <i class="fas fa-list-ul"></i><span>Lead Listing</span>
+            </a>
+            <a href="#" class="nav-item" data-screen="management">
+                <i class="fas fa-columns"></i><span>Lead Pipeline</span>
+            </a>
+            <a href="#" class="nav-item" data-screen="details">
+                <i class="fas fa-user-circle"></i><span>Lead Details</span>
+            </a>
+        </nav>
+        <div class="sidebar-section-label">AUTOMATION</div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item nav-sub"><i class="fas fa-robot"></i><span>Auto-Assign Rules</span></a>
+            <a href="#" class="nav-item nav-sub"><i class="fas fa-bell"></i><span>Smart Alerts</span></a>
+            <a href="#" class="nav-item nav-sub"><i class="fas fa-chart-line"></i><span>Lead Scoring</span></a>
+        </nav>
+        <div class="sidebar-section-label">SETTINGS</div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item nav-sub"><i class="fas fa-users-cog"></i><span>Team</span></a>
+            <a href="#" class="nav-item nav-sub"><i class="fas fa-plug"></i><span>Integrations</span></a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="user-avatar">RM</div>
+            <div class="user-info">
+                <span class="user-name">Ravi Mehta</span>
+                <span class="user-role">Business Manager</span>
+            </div>
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <span class="page-subtitle" id="pageSubtitle">Overview of your lead performance</span>
+            </div>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search leads, contacts...">
+                </div>
+                <div class="topbar-icon" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-badge">5</span>
+                </div>
+                <div class="topbar-icon"><i class="fas fa-question-circle"></i></div>
+                <button class="btn-primary" id="addLeadBtn"><i class="fas fa-plus"></i> Add Lead</button>
+            </div>
+        </header>
+
+        <!-- Screen 4: Dashboard -->
+        <section class="screen active" id="screen-dashboard">
+            <div class="dashboard-kpis">
+                <div class="kpi-card">
+                    <div class="kpi-icon blue"><i class="fas fa-users"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-value">1,247</span>
+                        <span class="kpi-label">Total Leads</span>
+                    </div>
+                    <span class="kpi-trend up"><i class="fas fa-arrow-up"></i> 12.5%</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon green"><i class="fas fa-handshake"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-value">23.4%</span>
+                        <span class="kpi-label">Conversion Rate</span>
+                    </div>
+                    <span class="kpi-trend up"><i class="fas fa-arrow-up"></i> 3.2%</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon orange"><i class="fas fa-clock"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-value">2.4 hrs</span>
+                        <span class="kpi-label">Avg Response Time</span>
+                    </div>
+                    <span class="kpi-trend down"><i class="fas fa-arrow-down"></i> 18min</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon purple"><i class="fas fa-rupee-sign"></i></div>
+                    <div class="kpi-data">
+                        <span class="kpi-value">&#8377;4.2 Cr</span>
+                        <span class="kpi-label">Pipeline Value</span>
+                    </div>
+                    <span class="kpi-trend up"><i class="fas fa-arrow-up"></i> 8.1%</span>
+                </div>
+            </div>
+
+            <div class="dashboard-row">
+                <div class="card card-2-3">
+                    <div class="card-header">
+                        <h3>Lead Trends</h3>
+                        <div class="card-actions">
+                            <button class="chip active">Weekly</button>
+                            <button class="chip">Monthly</button>
+                            <button class="chip">Yearly</button>
+                        </div>
+                    </div>
+                    <canvas id="leadsChart" height="260"></canvas>
+                </div>
+                <div class="card card-1-3">
+                    <div class="card-header">
+                        <h3>Lead Sources</h3>
+                    </div>
+                    <canvas id="sourcesChart" height="260"></canvas>
+                </div>
+            </div>
+
+            <div class="dashboard-row">
+                <div class="card card-1-3">
+                    <div class="card-header"><h3>Conversion Funnel</h3></div>
+                    <div class="funnel">
+                        <div class="funnel-step" style="width:100%"><span>New Leads</span><b>1,247</b></div>
+                        <div class="funnel-step" style="width:82%"><span>Contacted</span><b>1,022</b></div>
+                        <div class="funnel-step" style="width:55%"><span>Qualified</span><b>686</b></div>
+                        <div class="funnel-step" style="width:35%"><span>Negotiation</span><b>436</b></div>
+                        <div class="funnel-step" style="width:23%"><span>Won</span><b>292</b></div>
+                    </div>
+                </div>
+                <div class="card card-1-3">
+                    <div class="card-header"><h3>Top Sales Reps</h3></div>
+                    <div class="leaderboard">
+                        <div class="leader-row"><span class="rank gold">1</span><div class="leader-info"><b>Priya Sharma</b><span>68 conversions</span></div><span class="leader-bar" style="width:100%"></span></div>
+                        <div class="leader-row"><span class="rank silver">2</span><div class="leader-info"><b>Amit Kumar</b><span>54 conversions</span></div><span class="leader-bar" style="width:79%"></span></div>
+                        <div class="leader-row"><span class="rank bronze">3</span><div class="leader-info"><b>Sneha Reddy</b><span>47 conversions</span></div><span class="leader-bar" style="width:69%"></span></div>
+                        <div class="leader-row"><span class="rank">4</span><div class="leader-info"><b>Raj Patel</b><span>41 conversions</span></div><span class="leader-bar" style="width:60%"></span></div>
+                        <div class="leader-row"><span class="rank">5</span><div class="leader-info"><b>Neha Gupta</b><span>38 conversions</span></div><span class="leader-bar" style="width:56%"></span></div>
+                    </div>
+                </div>
+                <div class="card card-1-3">
+                    <div class="card-header"><h3>Recent Activity</h3></div>
+                    <div class="activity-feed">
+                        <div class="activity-item">
+                            <div class="activity-dot green"></div>
+                            <div><b>Priya</b> converted lead <b>Rahul Verma</b><span class="time">2 min ago</span></div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot blue"></div>
+                            <div><b>Amit</b> called <b>Deepak Singh</b><span class="time">15 min ago</span></div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot orange"></div>
+                            <div>New lead from <b>Facebook Ad</b><span class="time">22 min ago</span></div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot purple"></div>
+                            <div><b>Auto-assign</b>: Lead sent to <b>Sneha</b><span class="time">30 min ago</span></div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot red"></div>
+                            <div><b>Alert</b>: 3 leads need follow-up<span class="time">1 hr ago</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 1: Lead Listing -->
+        <section class="screen" id="screen-listing">
+            <div class="listing-toolbar">
+                <div class="toolbar-filters">
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select>
+                            <option>All Status</option>
+                            <option>New</option>
+                            <option>Contacted</option>
+                            <option>Qualified</option>
+                            <option>Negotiation</option>
+                            <option>Won</option>
+                            <option>Lost</option>
+                            <option>Not Interested</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Source</label>
+                        <select>
+                            <option>All Sources</option>
+                            <option>Facebook</option>
+                            <option>Google Ads</option>
+                            <option>Website</option>
+                            <option>Twitter</option>
+                            <option>Walk-in</option>
+                            <option>Referral</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Assigned To</label>
+                        <select>
+                            <option>All Reps</option>
+                            <option>Priya Sharma</option>
+                            <option>Amit Kumar</option>
+                            <option>Sneha Reddy</option>
+                            <option>Raj Patel</option>
+                            <option>Unassigned</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date Range</label>
+                        <select>
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                            <option>This Month</option>
+                            <option>Custom</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="btn-secondary"><i class="fas fa-download"></i> Export</button>
+                    <button class="btn-secondary"><i class="fas fa-upload"></i> Import</button>
+                    <button class="btn-secondary"><i class="fas fa-filter"></i> More Filters</button>
+                </div>
+            </div>
+
+            <div class="listing-summary">
+                <span>Showing <b>1-25</b> of <b>1,247</b> leads</span>
+                <div class="bulk-actions" style="display:none;">
+                    <button class="btn-sm">Assign</button>
+                    <button class="btn-sm">Change Status</button>
+                    <button class="btn-sm danger">Delete</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="leads-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>Lead Name <i class="fas fa-sort"></i></th>
+                            <th>Phone</th>
+                            <th>Source <i class="fas fa-sort"></i></th>
+                            <th>Interested In</th>
+                            <th>Status</th>
+                            <th>Score</th>
+                            <th>Assigned To</th>
+                            <th>Created <i class="fas fa-sort"></i></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="lead-row" data-screen="details">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm blue">RV</div><div><b>Rahul Verma</b><span>rahul.v@gmail.com</span></div></div></td>
+                            <td>+91 98765 43210</td>
+                            <td><span class="source-badge facebook"><i class="fab fa-facebook"></i> Facebook</span></td>
+                            <td>Hyundai Creta</td>
+                            <td><span class="status-badge new">New</span></td>
+                            <td><div class="score-badge hot">92</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">PS</div>Priya S.</div></td>
+                            <td>Mar 13, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm green">DS</div><div><b>Deepak Singh</b><span>deepak.s@yahoo.com</span></div></div></td>
+                            <td>+91 87654 32109</td>
+                            <td><span class="source-badge google"><i class="fab fa-google"></i> Google</span></td>
+                            <td>Maruti Swift</td>
+                            <td><span class="status-badge contacted">Contacted</span></td>
+                            <td><div class="score-badge warm">74</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">AK</div>Amit K.</div></td>
+                            <td>Mar 12, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm orange">AP</div><div><b>Anita Patel</b><span>anita.p@outlook.com</span></div></div></td>
+                            <td>+91 76543 21098</td>
+                            <td><span class="source-badge website"><i class="fas fa-globe"></i> Website</span></td>
+                            <td>Toyota Fortuner</td>
+                            <td><span class="status-badge qualified">Qualified</span></td>
+                            <td><div class="score-badge hot">88</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">SR</div>Sneha R.</div></td>
+                            <td>Mar 11, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm purple">MJ</div><div><b>Meera Joshi</b><span>meera.j@gmail.com</span></div></div></td>
+                            <td>+91 65432 10987</td>
+                            <td><span class="source-badge twitter"><i class="fab fa-twitter"></i> Twitter</span></td>
+                            <td>Honda City</td>
+                            <td><span class="status-badge negotiation">Negotiation</span></td>
+                            <td><div class="score-badge hot">95</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">PS</div>Priya S.</div></td>
+                            <td>Mar 10, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm red">VN</div><div><b>Vikram Nair</b><span>vikram.n@hotmail.com</span></div></div></td>
+                            <td>+91 54321 09876</td>
+                            <td><span class="source-badge walkin"><i class="fas fa-walking"></i> Walk-in</span></td>
+                            <td>Kia Seltos</td>
+                            <td><span class="status-badge won">Won</span></td>
+                            <td><div class="score-badge hot">98</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">RP</div>Raj P.</div></td>
+                            <td>Mar 9, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm teal">SK</div><div><b>Suresh Kulkarni</b><span>suresh.k@gmail.com</span></div></div></td>
+                            <td>+91 43210 98765</td>
+                            <td><span class="source-badge referral"><i class="fas fa-user-friends"></i> Referral</span></td>
+                            <td>Tata Nexon EV</td>
+                            <td><span class="status-badge not-interested">Not Interested</span></td>
+                            <td><div class="score-badge cold">32</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">AK</div>Amit K.</div></td>
+                            <td>Mar 8, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm blue">KD</div><div><b>Kavita Deshmukh</b><span>kavita.d@gmail.com</span></div></div></td>
+                            <td>+91 32109 87654</td>
+                            <td><span class="source-badge facebook"><i class="fab fa-facebook"></i> Facebook</span></td>
+                            <td>MG Hector</td>
+                            <td><span class="status-badge new">New</span></td>
+                            <td><div class="score-badge warm">65</div></td>
+                            <td><span class="unassigned">Unassigned</span></td>
+                            <td>Mar 13, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="lead-row">
+                            <td><input type="checkbox"></td>
+                            <td><div class="lead-name"><div class="avatar-sm green">AA</div><div><b>Arjun Ahuja</b><span>arjun.a@yahoo.com</span></div></div></td>
+                            <td>+91 21098 76543</td>
+                            <td><span class="source-badge google"><i class="fab fa-google"></i> Google</span></td>
+                            <td>Mahindra XUV700</td>
+                            <td><span class="status-badge contacted">Contacted</span></td>
+                            <td><div class="score-badge warm">71</div></td>
+                            <td><div class="assignee"><div class="avatar-xs">SR</div>Sneha R.</div></td>
+                            <td>Mar 12, 2026</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+                                <button class="icon-btn" title="Email"><i class="fas fa-envelope"></i></button>
+                                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button class="page-btn disabled"><i class="fas fa-chevron-left"></i></button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <span>...</span>
+                <button class="page-btn">50</button>
+                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Screen 3: Lead Management (Kanban Pipeline) -->
+        <section class="screen" id="screen-management">
+            <div class="kanban-toolbar">
+                <div class="kanban-stats">
+                    <span class="stat-pill"><b>1,247</b> Total</span>
+                    <span class="stat-pill blue"><b>312</b> New</span>
+                    <span class="stat-pill teal"><b>285</b> Contacted</span>
+                    <span class="stat-pill green"><b>250</b> Qualified</span>
+                    <span class="stat-pill orange"><b>108</b> Negotiation</span>
+                </div>
+                <div class="kanban-actions">
+                    <button class="btn-secondary"><i class="fas fa-sort-amount-down"></i> Sort</button>
+                    <button class="btn-secondary"><i class="fas fa-filter"></i> Filter</button>
+                </div>
+            </div>
+            <div class="kanban-board">
+                <div class="kanban-column">
+                    <div class="kanban-col-header new-header">
+                        <span class="col-dot new-dot"></span>
+                        <h4>New</h4>
+                        <span class="col-count">312</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <div class="kanban-card">
+                            <div class="kcard-top"><span class="source-tag facebook">Facebook</span><span class="score-sm hot">92</span></div>
+                            <div class="kcard-name">Rahul Verma</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Hyundai Creta</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">PS</div>Priya</div>
+                                <span class="kcard-time">2h ago</span>
+                            </div>
+                        </div>
+                        <div class="kanban-card">
+                            <div class="kcard-top"><span class="source-tag facebook">Facebook</span><span class="score-sm warm">65</span></div>
+                            <div class="kcard-name">Kavita Deshmukh</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> MG Hector</div>
+                            <div class="kcard-bottom">
+                                <span class="unassigned-sm">Unassigned</span>
+                                <span class="kcard-time">5h ago</span>
+                            </div>
+                            <div class="kcard-alert"><i class="fas fa-exclamation-triangle"></i> Auto-assign in 1h</div>
+                        </div>
+                        <div class="kanban-card">
+                            <div class="kcard-top"><span class="source-tag website">Website</span><span class="score-sm warm">58</span></div>
+                            <div class="kcard-name">Pooja Malhotra</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Tata Harrier</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">RP</div>Raj</div>
+                                <span class="kcard-time">8h ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kanban-column">
+                    <div class="kanban-col-header contacted-header">
+                        <span class="col-dot contacted-dot"></span>
+                        <h4>Contacted</h4>
+                        <span class="col-count">285</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <div class="kanban-card">
+                            <div class="kcard-top"><span class="source-tag google">Google</span><span class="score-sm warm">74</span></div>
+                            <div class="kcard-name">Deepak Singh</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Maruti Swift</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">AK</div>Amit</div>
+                                <span class="kcard-time">1d ago</span>
+                            </div>
+                        </div>
+                        <div class="kanban-card">
+                            <div class="kcard-top"><span class="source-tag google">Google</span><span class="score-sm warm">71</span></div>
+                            <div class="kcard-name">Arjun Ahuja</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Mahindra XUV700</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">SR</div>Sneha</div>
+                                <span class="kcard-time">1d ago</span>
+                            </div>
+                            <div class="kcard-alert reminder"><i class="fas fa-bell"></i> Follow-up due today</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kanban-column">
+                    <div class="kanban-col-header qualified-header">
+                        <span class="col-dot qualified-dot"></span>
+                        <h4>Qualified</h4>
+                        <span class="col-count">250</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <div class="kanban-card">
+                            <div class="kcard-top"><span class="source-tag website">Website</span><span class="score-sm hot">88</span></div>
+                            <div class="kcard-name">Anita Patel</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Toyota Fortuner</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">SR</div>Sneha</div>
+                                <span class="kcard-time">2d ago</span>
+                            </div>
+                            <div class="kcard-budget"><i class="fas fa-rupee-sign"></i> Budget: 35-40L</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kanban-column">
+                    <div class="kanban-col-header negotiation-header">
+                        <span class="col-dot negotiation-dot"></span>
+                        <h4>Negotiation</h4>
+                        <span class="col-count">108</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <div class="kanban-card highlight">
+                            <div class="kcard-top"><span class="source-tag twitter">Twitter</span><span class="score-sm hot">95</span></div>
+                            <div class="kcard-name">Meera Joshi</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Honda City</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">PS</div>Priya</div>
+                                <span class="kcard-time">3d ago</span>
+                            </div>
+                            <div class="kcard-budget"><i class="fas fa-rupee-sign"></i> Budget: 12-15L</div>
+                            <div class="kcard-alert success"><i class="fas fa-fire"></i> Hot lead - close soon!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kanban-column">
+                    <div class="kanban-col-header won-header">
+                        <span class="col-dot won-dot"></span>
+                        <h4>Won</h4>
+                        <span class="col-count">292</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <div class="kanban-card won-card">
+                            <div class="kcard-top"><span class="source-tag walkin">Walk-in</span><span class="score-sm hot">98</span></div>
+                            <div class="kcard-name">Vikram Nair</div>
+                            <div class="kcard-car"><i class="fas fa-car"></i> Kia Seltos</div>
+                            <div class="kcard-bottom">
+                                <div class="assignee-sm"><div class="avatar-xs">RP</div>Raj</div>
+                                <span class="kcard-time">4d ago</span>
+                            </div>
+                            <div class="kcard-won"><i class="fas fa-check-circle"></i> Sold - &#8377;14.5L</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="drag-hint"><i class="fas fa-info-circle"></i> Drag and drop cards between columns to update lead status</div>
+        </section>
+
+        <!-- Screen 2: Lead Details -->
+        <section class="screen" id="screen-details">
+            <div class="detail-layout">
+                <div class="detail-main">
+                    <div class="detail-header-card">
+                        <div class="detail-avatar blue">RV</div>
+                        <div class="detail-identity">
+                            <h2>Rahul Verma</h2>
+                            <div class="detail-tags">
+                                <span class="status-badge new">New</span>
+                                <span class="source-badge facebook"><i class="fab fa-facebook"></i> Facebook</span>
+                                <span class="score-badge hot">Score: 92</span>
+                            </div>
+                        </div>
+                        <div class="detail-quick-actions">
+                            <button class="btn-action green"><i class="fas fa-phone"></i> Call</button>
+                            <button class="btn-action blue"><i class="fas fa-envelope"></i> Email</button>
+                            <button class="btn-action purple"><i class="fas fa-sms"></i> SMS</button>
+                            <button class="btn-action orange"><i class="fas fa-calendar"></i> Schedule</button>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3><i class="fas fa-user"></i> Contact Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Phone</label><span>+91 98765 43210</span></div>
+                            <div class="info-item"><label>Email</label><span>rahul.v@gmail.com</span></div>
+                            <div class="info-item"><label>Location</label><span>HSR Layout, Bangalore</span></div>
+                            <div class="info-item"><label>Preferred Contact</label><span>Phone (Evening)</span></div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3><i class="fas fa-car"></i> Vehicle Interest</h3>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Interested Model</label><span>Hyundai Creta SX(O)</span></div>
+                            <div class="info-item"><label>Budget Range</label><span>&#8377;15L - &#8377;18L</span></div>
+                            <div class="info-item"><label>Purchase Timeline</label><span>Within 1 month</span></div>
+                            <div class="info-item"><label>Fuel Preference</label><span>Diesel</span></div>
+                            <div class="info-item"><label>Color Preference</label><span>Abyss Black</span></div>
+                            <div class="info-item"><label>Exchange Vehicle</label><span>Yes - Maruti Alto (2019)</span></div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3><i class="fas fa-history"></i> Activity Timeline</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="tl-dot blue"></div>
+                                <div class="tl-content">
+                                    <div class="tl-header"><b>Lead Created</b><span>Mar 13, 2026 - 10:30 AM</span></div>
+                                    <p>Lead captured from Facebook Ad Campaign "Creta March Offer". Auto-assigned to Priya Sharma based on round-robin rule.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="tl-dot purple"></div>
+                                <div class="tl-content">
+                                    <div class="tl-header"><b>Auto Lead Scoring</b><span>Mar 13, 2026 - 10:31 AM</span></div>
+                                    <p>Lead scored <b>92/100</b> (Hot). High score factors: Budget matches inventory, timeline is urgent, location is nearby.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="tl-dot orange"></div>
+                                <div class="tl-content">
+                                    <div class="tl-header"><b>SMS Sent (Auto)</b><span>Mar 13, 2026 - 10:32 AM</span></div>
+                                    <p>Automated welcome SMS sent: "Hi Rahul, thank you for your interest in Hyundai Creta. Our team will contact you shortly. - HSR Motors"</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="tl-dot green"></div>
+                                <div class="tl-content">
+                                    <div class="tl-header"><b>Reminder Set</b><span>Mar 13, 2026 - 10:35 AM</span></div>
+                                    <p>Auto-reminder created for Priya to call within 2 hours (SLA compliance).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3><i class="fas fa-sticky-note"></i> Notes</h3>
+                        <div class="notes-area">
+                            <textarea placeholder="Add a note about this lead..."></textarea>
+                            <button class="btn-primary btn-sm">Save Note</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-sidebar">
+                    <div class="sidebar-card">
+                        <h4>Lead Score Breakdown</h4>
+                        <div class="score-breakdown">
+                            <div class="score-circle">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-fill hot-fill" stroke-dasharray="92, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <text x="18" y="20.35" class="score-text">92</text>
+                                </svg>
+                            </div>
+                            <div class="score-factors">
+                                <div class="factor"><span>Budget Match</span><div class="factor-bar"><div style="width:95%"></div></div></div>
+                                <div class="factor"><span>Timeline</span><div class="factor-bar"><div style="width:90%"></div></div></div>
+                                <div class="factor"><span>Engagement</span><div class="factor-bar"><div style="width:85%"></div></div></div>
+                                <div class="factor"><span>Location</span><div class="factor-bar"><div style="width:100%"></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4>Assigned Rep</h4>
+                        <div class="rep-card">
+                            <div class="avatar-md blue">PS</div>
+                            <div>
+                                <b>Priya Sharma</b>
+                                <span>Senior Sales Executive</span>
+                                <span class="rep-stat">68 conversions this quarter</span>
+                            </div>
+                        </div>
+                        <button class="btn-secondary btn-full">Reassign Lead</button>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4>Upcoming Actions</h4>
+                        <div class="action-list">
+                            <div class="action-item urgent">
+                                <i class="fas fa-phone"></i>
+                                <div><b>Call Lead</b><span>Due in 1h 28m</span></div>
+                            </div>
+                            <div class="action-item">
+                                <i class="fas fa-car"></i>
+                                <div><b>Schedule Test Drive</b><span>After first call</span></div>
+                            </div>
+                            <div class="action-item">
+                                <i class="fas fa-file-invoice"></i>
+                                <div><b>Send Quotation</b><span>If qualified</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4>Similar Leads</h4>
+                        <div class="similar-leads">
+                            <div class="similar-item"><div class="avatar-xs green">AP</div><div><b>Anita Patel</b><span>Also interested in SUVs</span></div></div>
+                            <div class="similar-item"><div class="avatar-xs orange">DS</div><div><b>Deepak Singh</b><span>Same locality</span></div></div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4>Quick Status Update</h4>
+                        <div class="status-buttons">
+                            <button class="status-btn contacted">Contacted</button>
+                            <button class="status-btn qualified">Qualified</button>
+                            <button class="status-btn not-interested">Not Interested</button>
+                            <button class="status-btn won">Won</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
