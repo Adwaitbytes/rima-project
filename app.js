@@ -1,28 +1,58 @@
 // ==================== NAVIGATION ====================
+function switchScreen(screen) {
+    const titles = {
+        dashboard: ['Dashboard', 'Overview of your lead performance'],
+        listing: ['Lead Listing', 'View and manage all your leads'],
+        management: ['Lead Pipeline', 'Drag leads through your sales pipeline'],
+        details: ['Lead Details', 'Detailed view of lead information']
+    };
+
+    // Update sidebar nav
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const sidebarItem = document.querySelector('.sidebar .nav-item[data-screen="' + screen + '"]');
+    if (sidebarItem) sidebarItem.classList.add('active');
+
+    // Update mobile nav
+    document.querySelectorAll('.mobile-nav a').forEach(n => n.classList.remove('active'));
+    const mobileItem = document.querySelector('.mobile-nav a[data-screen="' + screen + '"]');
+    if (mobileItem) mobileItem.classList.add('active');
+
+    // Switch screen
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + screen).classList.add('active');
+
+    // Update page title
+    document.getElementById('pageTitle').textContent = titles[screen][0];
+    document.getElementById('pageSubtitle').textContent = titles[screen][1];
+}
+
+// Sidebar nav clicks
 document.querySelectorAll('.nav-item[data-screen]').forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
-        const screen = item.dataset.screen;
-
-        // Update active nav
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        item.classList.add('active');
-
-        // Switch screen
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById('screen-' + screen).classList.add('active');
-
-        // Update page title
-        const titles = {
-            dashboard: ['Dashboard', 'Overview of your lead performance'],
-            listing: ['Lead Listing', 'View and manage all your leads'],
-            management: ['Lead Pipeline', 'Drag leads through your sales pipeline'],
-            details: ['Lead Details', 'Detailed view of lead information']
-        };
-        document.getElementById('pageTitle').textContent = titles[screen][0];
-        document.getElementById('pageSubtitle').textContent = titles[screen][1];
+        switchScreen(item.dataset.screen);
     });
 });
+
+// Mobile nav clicks
+document.querySelectorAll('.mobile-nav a[data-screen]').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchScreen(item.dataset.screen);
+    });
+});
+
+// Show mobile nav on small screens
+function checkMobileNav() {
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (window.innerWidth <= 600) {
+        mobileNav.style.display = 'flex';
+    } else {
+        mobileNav.style.display = 'none';
+    }
+}
+window.addEventListener('resize', checkMobileNav);
+checkMobileNav();
 
 // Lead rows click -> navigate to details
 document.querySelectorAll('.lead-row[data-screen]').forEach(row => {
@@ -67,7 +97,8 @@ function initCharts() {
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
+                aspectRatio: 2,
                 plugins: {
                     legend: {
                         position: 'top',
@@ -100,7 +131,8 @@ function initCharts() {
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
+                aspectRatio: 1,
                 cutout: '65%',
                 plugins: {
                     legend: {

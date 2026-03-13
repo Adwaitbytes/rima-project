@@ -124,13 +124,13 @@
                             <button class="chip">Yearly</button>
                         </div>
                     </div>
-                    <canvas id="leadsChart" height="260"></canvas>
+                    <div class="chart-wrapper"><canvas id="leadsChart"></canvas></div>
                 </div>
                 <div class="card card-1-3">
                     <div class="card-header">
                         <h3>Lead Sources</h3>
                     </div>
-                    <canvas id="sourcesChart" height="260"></canvas>
+                    <div class="chart-wrapper"><canvas id="sourcesChart"></canvas></div>
                 </div>
             </div>
 
@@ -714,6 +714,14 @@
             </div>
         </section>
     </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav" style="display:none">
+        <a href="#" class="active" data-screen="dashboard"><i class="fas fa-th-large"></i>Dashboard</a>
+        <a href="#" data-screen="listing"><i class="fas fa-list-ul"></i>Leads</a>
+        <a href="#" data-screen="management"><i class="fas fa-columns"></i>Pipeline</a>
+        <a href="#" data-screen="details"><i class="fas fa-user-circle"></i>Details</a>
+    </nav>
 
     <script src="app.js"></script>
 </body>
